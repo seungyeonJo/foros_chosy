@@ -70,9 +70,9 @@ bool request_vote(
     const LogEntry::SharedPtr log, const std::vector<std::string>& candidate_data,
     std::function<void(const uint64_t, const bool)> callback);
 
-
+  std::string read_entry_buffer();
  void copy_data_from_candidate(const std::vector<std::string>& data); ///syc
- RCLCPP_INFO(logger_, "entry buffer: \n%s", this->read_entry_buffer().c_str()  );
+ 
   //syc renew
     //syc renew
       //syc renew

@@ -174,17 +174,33 @@ void OtherNode::send_append_entries(
 //syc/////////////////
 //syc/////////////////
 
+std::string read_entry_buffer() {
+    std::string result;
+    for (const auto& entry : candidate_data) {
+        result += entry + " ";  // 요소들 사이에 공백을 추가하여 구분
+    }
+    if (!result.empty()) {
+        result.pop_back();  // 마지막 공백 제거
+    }
+     return candidate_data.back();
+   
+}
+
 bool OtherNode::request_vote(
     const uint64_t current_term, const uint32_t node_id,
     const LogEntry::SharedPtr log,const std::vector<std::string>& candidate_data,
     std::function<void(const uint64_t, const bool)> callback) {
 
+
+
   copy_data_from_candidate(candidate_data); // 벡터 데이터 복사
+
+
   if (request_vote_->service_is_ready() == false) {
     return false;
   }
 
-  RCLCPP_INFO(logger_, "entry buffer: \n%s", this.candidate  );
+  RCLCPP_INFO(logger_, "entry buffer: \n%s", this.read_entry_buffer().c_str() );
 
 
   auto request = std::make_shared<foros_msgs::srv::RequestVote::Request>();
@@ -204,6 +220,8 @@ bool OtherNode::request_vote(
   return true;
 }
 
+//////////////////syc
+///////////////syc/
 
 //syc/////////////////
 //syc/////////////////
